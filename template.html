@@ -1,0 +1,98 @@
+<html>
+  <style>
+    html {
+      height: 100%;
+      display: table;
+      margin: auto;
+    }
+
+    body {
+      height: 100%;
+      display: table-cell;
+      vertical-align: middle;
+      background-image: url('https://i.imgur.com/Llm00Bo.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      background-color: black;
+    }
+
+    button {
+      position : absolute;    
+      width    : 100px;
+      left     : 50%;
+      top      : 60%;
+      margin-left : -50px; /* half of the width  */
+      background-color: #e7e7e7;
+      color: black;
+      border-radius: 12px;
+    }
+
+    div {
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      font-style: italic;
+      font-size: 130%;
+      padding: 150px;
+    }
+
+    h2 {
+      position : absolute;    
+      left     : 10%;
+      top      : 30%;
+    }
+  </style>
+  <script>
+    fetch('/api/quotes')
+    .then(
+      function(response) {
+        if (response.status !== 200) {
+          console.log(response.status);
+          return;
+        }
+
+        response.json().then(function(data) {
+          let ids = [];
+          data.quotes.forEach(function (quote, index) {
+            ids.push(quote.id)
+          });
+
+          document.getElementById("ids").innerHTML = ids;
+        });
+      }
+    )
+    .catch(function(err) {
+      console.log('Fetch Error :-S', err);
+    });
+  </script>
+  <body>
+    <h2>{{.PageTitle}}</h2>
+    <div id="quote"></div>
+    <div id="ids" hidden></div>
+    <button onclick="getQuote()">Get Quote</button>
+  </body>
+  <script>
+    function getQuote() {
+      let idsArray = document.getElementById("ids").innerHTML.split(',');
+      let id = idsArray[Math.floor(Math.random() * idsArray.length)];
+
+      fetch(`/api/quotes/${id}`)
+      .then(
+        function(response) {
+          if (response.status !== 200) {
+            console.log(response.status);
+            return;
+          }
+
+          response.json().then(function(data) {
+            document.getElementById('quote').innerHTML = `"${data.quote}"`;
+          });
+        }
+      )
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
+    }
+  </script>
+</html>
