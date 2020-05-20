@@ -1,1 +1,6 @@
 runtime: go112
+
+env_variables:
+  CLOUDSQL_CONNECTION_NAME: swanson-quotes-277514:europe-west2:swanson-quotes
+  CLOUDSQL_USER: root
+  CLOUDSQL_PASSWORD: 9n15vPsrkH6Kxrua

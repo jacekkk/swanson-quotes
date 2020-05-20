@@ -2,10 +2,10 @@ package router
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"net/http"
-
-	"../models"
+	"swanson/models"
 
 	"github.com/gorilla/mux"
 )
@@ -36,6 +36,10 @@ func getQuotes(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	quotes, err := models.GetAllQuotes()
+
+	fmt.Println(quotes)
+	fmt.Println(err)
+
 	if err != nil {
 		http.Error(w, http.StatusText(500), 500)
 		return
