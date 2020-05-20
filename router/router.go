@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"net/http"
 
-	"../models"
+	"swanson/models"
 
 	"github.com/gorilla/mux"
 )

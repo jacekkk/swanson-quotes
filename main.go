@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"./models"
-	"./router"
+	"swanson/models"
+	"swanson/router"
 )
 
 func main() {
