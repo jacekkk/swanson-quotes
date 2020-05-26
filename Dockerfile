@@ -1,9 +1,7 @@
 # Use the official Golang image to create a build artifact.
 # This is based on Debian and sets the GOPATH to /go.
 # https://hub.docker.com/_/golang
-FROM golang:1.14 as builder
-
-# ENV CLOUDSQL_CONNECTION_NAME=swanson-quotes-277514:europe-west2:swanson-quotes,CLOUDSQL_USER=root,CLOUDSQL_PASSWORD=9n15vPsrkH6Kxrua,CLOUDSQL_DATABASE_NAME=swanson_quotes
+FROM golang:latest as builder
 
 # Create and change to the app directory.
 WORKDIR /app

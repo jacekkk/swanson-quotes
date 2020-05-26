@@ -15,15 +15,15 @@ func main() {
 		user           = mustGetenv("CLOUDSQL_USER")
 		dbName         = os.Getenv("CLOUDSQL_DATABASE_NAME") // NOTE: dbName may be empty
 		password       = os.Getenv("CLOUDSQL_PASSWORD")      // NOTE: password may be empty
-		socket         = os.Getenv("CLOUDSQL_SOCKET_PREFIX")
 		port           = os.Getenv("PORT")
+		env            = mustGetenv("ENVIRONMENT")
 	)
 
-	models.InitDB(user, password, socket, connectionName, dbName)
+	models.InitDB(user, password, connectionName, dbName, env)
 	router := router.Router()
 
 	fmt.Println("Starting server...")
-	log.Fatal(http.ListenAndServe(":"+port, router))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), router))
 }
 
 func mustGetenv(k string) string {
