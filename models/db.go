@@ -3,26 +3,28 @@ package models
 import (
 	"database/sql"
 	"fmt"
-	"log"
 
 	"github.com/GoogleCloudPlatform/cloudsql-proxy/proxy/dialers/mysql"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var db *sql.DB
 
-func InitDB() {
+func InitDB(user string, password string, connectionName string, dbName string, env string) {
 	var err error
-	cfg := mysql.Cfg("swanson-quotes-277514:europe-west2:swanson-quotes", "root", "9n15vPsrkH6Kxrua")
-	cfg.DBName = "swanson_quotes"
-	db, err = mysql.DialCfg(cfg)
+
+	if env == "PROD" {
+		dbURI := fmt.Sprintf("%s:%s@unix(/cloudsql/%s)/%s", user, password, connectionName, dbName)
+		db, err = sql.Open("mysql", dbURI)
+	} else {
+		cfg := mysql.Cfg(connectionName, user, password)
+		cfg.DBName = dbName
+		db, err = mysql.DialCfg(cfg)
+	}
 
 	if err != nil {
-		log.Panic(err)
+		panic(fmt.Sprintf("DB: %v", err))
 	}
 
-	if err = db.Ping(); err != nil {
-		log.Panic(err)
-	}
-
-	fmt.Println("Connected to DB")
+	fmt.Println("db connected")
 }
