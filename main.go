@@ -22,7 +22,7 @@ func main() {
 	models.InitDB(user, password, connectionName, dbName, env)
 	router := router.Router()
 
-	fmt.Println("Starting server...")
+	fmt.Printf("Starting server on port %s...", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), router))
 }
 

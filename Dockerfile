@@ -24,7 +24,8 @@ FROM alpine:3
 RUN apk add --no-cache ca-certificates
 
 # Copy the binary to the production image from the builder stage.
-COPY --from=builder /app/server /server
+COPY --from=builder /app/server /app/server
+COPY --from=builder /app/template.html /app/template.html
 
 # Run the web service on container startup.
-CMD ["/server"]
+CMD ["/app/server"]

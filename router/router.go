@@ -69,7 +69,7 @@ func getQuote(w http.ResponseWriter, r *http.Request) {
 }
 
 func renderPage(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("./template.html"))
+	tmpl := template.Must(template.ParseFiles("app/template.html"))
 	quotes, err := models.GetAllQuotes()
 
 	if err != nil {
